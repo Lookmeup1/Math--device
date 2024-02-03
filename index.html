@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+ <meta charset="utf-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+ <title>Brandon's Calculator</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+  <script>
+  let trailingResult = 0;
+  let operations = [ 'multiply', 'subtract', 'divide', 'add'];
+  let workOperations = "";
+
+  function updateDisplay(input) {
+   let display = document.getElementById("display");
+   let secondaryDisplay = document.getElementById("secondaryDisplay")
+
+   if (display.innerHTML === "0"  && operations.indexOf(input) === -1 ) {
+     if (input === "decimal") {
+       display.innerHTML = "0.";
+     } else if (input === "negative-value") {
+       if (display.innerHTML.indexOf("-1") === -1) {
+       display.innerHTML = "-" + display.innerHTML
+     } else if (display.innerHTML.indexOf("-1" > -1)) {
+       display.innerHTML = display.innerHTML.slice(1, display.innerHTML.length);
+     }
+   }  else {
+       display.innerHTML = input;
+
+     }
+   } else if (operations.indexOf(input) >= 0) {
+      //Opprand button pressed twice exception
+     if (trailingResult === display.innerHTML)  {
+       workOperations = input;
+  } else if  (workOperations === "") {
+       //Dealing wiht an intital operand
+     workOperations = input;
+     trailingResult = display.innerHTML;
+     secondaryDisplay.innerHTML = trailingResult;
+     display.innerHTML = 0;
+
+   } else {
+      trailingResult = calculate(trailingResult, display.innerHTML, workOperations);
+      secondaryDisplay.innerHTML = trailingResult;
+      display.innerHTML = 0;
+      workOperations = input;
+
+    }
+  } else if (input === "equals") {
+   display.innerHTML = calculate(trailingResult, display.innerHTML, workOperations);
+   trailingResult = 0;
+   workOperations = "";
+  secondaryDisplay.innerHTML = trailingResult;
+  if (display.innerHTML === "1234") {
+  display.innerHTML = "Cory is gay"}
+
+}
+
+ else if (input === "decimal") {
+console.log("dec");
+if (display.innerHTML.indexOf(".") === -1) {
+display.innerHTML += ".";
+}
+console.log("dec skipp num")
+} else if (input === "negative-value") {
+if (display.innerHTML.indexOf("-1") === -1) {
+display.innerHTML = "-" + display.innerHTML
+} else if (display.innerHTML.indexOf("-1" > -1)) {
+display.innerHTML = display.innerHTML.slice(1, display.innerHTML.length);
+}
+ }  else {
+       display.innerHTML += input;
+     }
+   }
+
+  function clearDisplay() {
+   let display = document.getElementById("display");
+   let secondaryDisplay = document.getElementById("secondaryDisplay");
+   trailingResult = 0;
+   display.innerHTML = 0;
+   secondaryDisplay.innerHTML = trailingResult;
+
+  }
+
+  function calculate(firstNumber, secondNumber, operation) {
+   let result;
+   firstNumber = parseFloat(firstNumber);
+   secondNumber = parseFloat(secondNumber);
+   switch(operation) {
+     case "add":
+       result = firstNumber + secondNumber;
+       break;
+     case "subtract":
+       result = firstNumber - secondNumber;
+       break;
+       case "multiply":
+         result = firstNumber * secondNumber;
+         break;
+         case "divide":
+           result = firstNumber / secondNumber;
+           break;
+     default:
+       console.log("F in chat")
+   }
+   return result.toString();
+
+
+
+  }
+
+
+
+  </script>
+
+</head>
+
+
+<body class="body">
+ <h1>Brandon's Calculator</h1>
+
+<div id="container-fluid">
+<div class="row text-center">
+ <div class="col-10">
+ <div id="display" class="bg-warning text-center my-3 py-5 Cory">0</div>
+</div>
+<div class="col-2">
+<div id="secondaryDisplay" class="bg-white text-center my-3 py-5">0</div>
+</div>
+</div>
+</div>
+
+<div id="container-fluid" >
+ <button id="equals" onclick="updateDisplay('equals')">=</button>
+ <button id="zero" onclick="updateDisplay(0)">0</button>
+ <button id="negative-value" onclick="updateDisplay('negative-value')" >+/-</button>
+ </div>
+
+
+<div id="container-fluid" class="line">
+ <button id="one"class="btn btn-outline-warning" onclick="updateDisplay(1)">1</button>
+ <button id="two"class="btn btn-outline-warning" onclick="updateDisplay(2)">2</button>
+ <button id="three"class="btn btn-outline-warning" onclick="updateDisplay(3)">3</button>
+</div>
+<div id="container-fluid">
+ <button id="four"class="btn btn-outline-warning" onclick="updateDisplay(4)">4</button>
+ <button id="five"class="btn btn-outline-warning" onclick="updateDisplay(5)">5</button>
+ <button id="six"class="btn btn-outline-warning" onclick="updateDisplay(6)">6</button>
+</div>
+<div id="container-fluid">
+ <button id="seven"class="btn btn-outline-warning" onclick="updateDisplay(7)">7</button>
+ <button id="eight"class="btn btn-outline-warning" onclick="updateDisplay(8)">8</button>
+ <button id="nine"class="btn btn-outline-warning" onclick="updateDisplay(9)">9</button>
+</div>
+<div id="container-fluid">
+ <button id="add" onclick="updateDisplay('add')">+</button>
+ <button id="subtract" onclick="updateDisplay('subtract')" >-</button>
+ <button id="multiply" onclick="updateDisplay('multiply')" >x</button>
+</div>
+<button id="divide" onclick="updateDisplay('divide')" >/</button>
+<button id="decimal" onclick="updateDisplay('decimal')" >.</button>
+<button id="clear" onclick="clearDisplay()" >AC</button>
+</body>
+
+
+
+<script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+
+<style>
+body {
+background-color: black;
+
+};,
+
+div {
+background-color: pink;
+}
+
+</style>
+
+
+</html>
